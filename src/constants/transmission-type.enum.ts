@@ -1,0 +1,6 @@
+export enum TransmissionEnum {
+  AUTOMATIC = 'AUTOMATIC',
+  MANUAL = 'MANUAL',
+  SEMI_AUTOMATIC = 'SEMI_AUTOMATIC',
+  VARIATOR = 'VARIATOR',
+}

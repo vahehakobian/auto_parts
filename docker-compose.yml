@@ -1,0 +1,46 @@
+version: "3"
+
+volumes:
+  db: # mount it internally instead of a folder. it avoids file lock problems
+
+services:
+  app:
+    env_file:
+      - .env
+    container_name: auto_parts_backend
+    restart: always
+    build: .
+    ports:
+      - "$PORT:$PORT"
+    depends_on:
+      - postgres
+      # - redis
+    links:
+      - postgres
+
+  # redis:
+  #   image: "redis:alpine"
+  #   ports:
+  #     - "6379:6379"
+
+  # redis-commander:
+  #   image: rediscommander/redis-commander:latest
+  #   environment:
+  #     - REDIS_HOSTS=local:redis:6379
+  #   ports:
+  #     - "8081:8081"
+  #   depends_on:
+  #     - redis
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      TZ: 'GMT'
+      PGTZ: 'GMT'
+    ports:
+      - "5433:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
